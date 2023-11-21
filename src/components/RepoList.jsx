@@ -50,22 +50,24 @@ const RepoList = () => {
 
     return (
         <>
-            <Header
-                onSearch={handleSearch}
-                sortOption={sortOption}
-                onSortChange={setSortOption}
-                isSearchActive={!!query}
-            />
+            <div className="mx-auto max-w-7xl ">
+                <Header
+                    onSearch={handleSearch}
+                    sortOption={sortOption}
+                    onSortChange={setSortOption}
+                    isSearchActive={!!query}
+                />
 
-            {sortedRepos.length > 0 ? (
-                <ul className="divide-y divide-white/5  grid grid-cols-3 gap-4 p-4 m-4 ">
-                    {sortedRepos.map((repo) => (
-                        <RepoCard key={repo.id} repo={repo} />
-                    ))}
-                </ul>
-            ) : (
-                <p>No matching repos found.</p>
-            )}
+                {sortedRepos.length > 0 ? (
+                    <ul className=" grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 sm:p-0 mb-4">
+                        {sortedRepos.map((repo) => (
+                            <RepoCard key={repo.id} repo={repo} />
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No matching repos found.</p>
+                )}
+            </div>
         </>
     );
 };
