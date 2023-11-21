@@ -4,7 +4,6 @@ This ReactJS project allows users to search for public GitHub repositories using
 
 ## Features
 
-<<<<<<< HEAD
 -   Search field to query public GitHub repositories
 -   Display information for each repository in a card format
     -   Avatar
@@ -19,22 +18,6 @@ This ReactJS project allows users to search for public GitHub repositories using
     -   Name
     -   Created at
     -   Updated at
-=======
-- Search field to query public GitHub repositories
-- Display information for each repository in a card format
-  - Avatar
-  - Repo name
-  - Stars
-  - Description
-  - Language
-- Sorting options for repositories
-  - Stars
-  - Watchers count
-  - Score
-  - Name
-  - Created at
-  - Updated at
->>>>>>> 891cfe433a7891aa0af70a9ac06013af2511a970
 
 ## Getting Started
 
@@ -42,11 +25,6 @@ This ReactJS project allows users to search for public GitHub repositories using
 
 1. Clone the repository:
 
-<<<<<<< HEAD
     ```bash
     git clone https://github.com/your-username/github-repo-search-react.git
     ```
-=======
-   ```bash
-   git clone https://github.com/your-username/github-repo-search-react.git
->>>>>>> 891cfe433a7891aa0af70a9ac06013af2511a970
