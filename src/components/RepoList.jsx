@@ -1,9 +1,10 @@
-// src/components/RepoList.js
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import RepoCard from "./RepoCard";
-// import { fetchRepos, selectAllRepos } from "../app/repoSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchRepos, selectAllRepos } from "../redux/reducers/repoReducer";
+import SearchBar from "./SearchBar";
+import SortDropdown from "./SortDropdown";
+import RepoCard from "./RepoCard";
+import Header from "./Header";
 
 const RepoList = () => {
     const dispatch = useDispatch();
@@ -12,8 +13,10 @@ const RepoList = () => {
     const [sortOption, setSortOption] = useState("stars");
     const [initialLoad, setInitialLoad] = useState(true);
 
-    const handleSearch = () => {
-        dispatch(fetchRepos({ query, sort: sortOption }));
+    const handleSearch = (searchQuery) => {
+        setQuery(searchQuery);
+        dispatch(fetchRepos({ query: searchQuery, sort: sortOption }));
+        setInitialLoad(false);
     };
 
     const sortRepos = (repos, sortOption) => {
@@ -38,42 +41,32 @@ const RepoList = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchRepos("Javascript"));
-    }, [query, sortOption]);
+        if (initialLoad) {
+            dispatch(fetchRepos("Javascript"));
+        }
+    }, [initialLoad]);
 
     const sortedRepos = query ? sortRepos(repos, sortOption) : repos;
 
     return (
-        <div>
-            <div>
-                <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                />
-                <button onClick={handleSearch}>Search</button>
-            </div>
-            <select
-                value={sortOption}
-                onChange={(e) => setSortOption(e.target.value)}
-            >
-                <option value="stars">Stars</option>
-                <option value="watchers">Watchers</option>
-                <option value="score">Score</option>
-                <option value="name">Name</option>
-                <option value="created_at">Created At</option>
-                <option value="updated_at">Updated At</option>
-            </select>
-            <div>
-                {sortedRepos.length > 0 ? (
-                    sortedRepos.map((repo) => (
+        <>
+            <Header
+                onSearch={handleSearch}
+                sortOption={sortOption}
+                onSortChange={setSortOption}
+                isSearchActive={!!query}
+            />
+
+            {sortedRepos.length > 0 ? (
+                <ul className="divide-y divide-white/5  grid grid-cols-3 gap-4 p-4 m-4 ">
+                    {sortedRepos.map((repo) => (
                         <RepoCard key={repo.id} repo={repo} />
-                    ))
-                ) : (
-                    <p>No matching repos found.</p>
-                )}
-            </div>
-        </div>
+                    ))}
+                </ul>
+            ) : (
+                <p>No matching repos found.</p>
+            )}
+        </>
     );
 };
 

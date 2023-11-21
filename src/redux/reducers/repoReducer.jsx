@@ -15,12 +15,20 @@ const API_BASE_URL = "https://api.github.com/search/repositories";
 export const fetchRepos = createAsyncThunk(
     "repos/fetchRepos",
     async ({ query, sort }) => {
-        // Making a GET request to the GitHub API with the provided query and sort parameters
-        const response = await axios.get(
-            `${API_BASE_URL}?q=${query}&sort=${sort}`
-        );
-        // Returning the items (repositories) from the response data
-        return response.data.items;
+        try {
+            const response = await axios.get(
+                `${API_BASE_URL}?q=${query}&sort=${sort}`,
+                {
+                    headers: {
+                        Authorization: `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`,
+                    },
+                }
+            );
+            return response.data.items;
+        } catch (error) {
+            // Handle error appropriately
+            throw error;
+        }
     }
 );
 
