@@ -1,8 +1,29 @@
-# React + Vite
+# GitHub Repo Search in ReactJS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This ReactJS project allows users to search for public GitHub repositories using the GitHub API. It fetches data for the repositories and displays them in a user-friendly format with various sorting options.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search field to query public GitHub repositories
+- Display information for each repository in a card format
+  - Avatar
+  - Repo name
+  - Stars
+  - Description
+  - Language
+- Sorting options for repositories
+  - Stars
+  - Watchers count
+  - Score
+  - Name
+  - Created at
+  - Updated at
+
+## Getting Started
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/github-repo-search-react.git
