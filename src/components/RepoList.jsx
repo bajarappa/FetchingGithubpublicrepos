@@ -1,12 +1,13 @@
+// Import React and necessary hooks and components
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRepos, selectAllRepos } from "../redux/reducers/repoReducer";
-import SearchBar from "./SearchBar";
-import SortDropdown from "./SortDropdown";
 import RepoCard from "./RepoCard";
 import Header from "./Header";
 
-const RepoList = () => {
+// Define the functional component RepoList
+export default function RepoList() {
+    // Initialize necessary hooks and state variables
     const dispatch = useDispatch();
     const repos = useSelector(selectAllRepos);
     const [query, setQuery] = useState("");
@@ -14,15 +15,18 @@ const RepoList = () => {
     const [initialLoad, setInitialLoad] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    // Function to handle the search action
     const handleSearch = (searchQuery) => {
         setQuery(searchQuery);
         setLoading(true);
+        // Dispatch the fetchRepos action with the provided parameters
         dispatch(fetchRepos({ query: searchQuery, sort: sortOption }))
             .unwrap()
             .finally(() => setLoading(false));
         setInitialLoad(false);
     };
 
+    // Function to sort repos based on the selected option
     const sortRepos = (repos, sortOption) => {
         return [...repos].sort((a, b) => {
             switch (sortOption) {
@@ -44,17 +48,22 @@ const RepoList = () => {
         });
     };
 
+    // useEffect to fetch repos on initial load
     useEffect(() => {
         if (initialLoad) {
             dispatch(fetchRepos("Javascript"));
         }
     }, [initialLoad]);
 
+    // Sort repos based on the selected option or display unsorted repos if there's a search query
     const sortedRepos = query ? sortRepos(repos, sortOption) : repos;
 
+    // Return the JSX for the RepoList component
     return (
         <>
+            {/* Container for the RepoList component */}
             <div className="mx-auto max-w-7xl ">
+                {/* Header component with search and sorting functionality */}
                 <Header
                     onSearch={handleSearch}
                     sortOption={sortOption}
@@ -62,10 +71,12 @@ const RepoList = () => {
                     isSearchActive={!!query}
                 />
 
+                {/* Display loading message, repos, or no matching repos message based on the state */}
                 {loading ? (
                     <p>Loading...</p>
                 ) : sortedRepos.length > 0 ? (
                     <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 sm:p-0 mb-4">
+                        {/* Map through sorted repos and render RepoCard components */}
                         {sortedRepos.map((repo) => (
                             <RepoCard key={repo.id} repo={repo} />
                         ))}
@@ -76,6 +87,4 @@ const RepoList = () => {
             </div>
         </>
     );
-};
-
-export default RepoList;
+}
