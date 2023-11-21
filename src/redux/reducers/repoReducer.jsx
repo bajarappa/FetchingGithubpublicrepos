@@ -3,9 +3,9 @@ import axios from "axios";
 
 // Initial state for the repository slice
 const initialState = {
-    repos: [], // Array to store fetched repositories
-    status: "idle", // Status of the asynchronous operation (loading, succeeded, failed)
-    error: null, // Error message in case of a failed operation
+    repos: [],
+    status: "idle",
+    error: null,
 };
 
 // Base URL for the GitHub API
@@ -16,11 +16,12 @@ export const fetchRepos = createAsyncThunk(
     "repos/fetchRepos",
     async ({ query, sort }) => {
         try {
+            const apiKey = import.meta.env.VITE_REACT_APP_GITHUB_API_KEY;
             const response = await axios.get(
                 `${API_BASE_URL}?q=${query}&sort=${sort}`,
                 {
                     headers: {
-                        Authorization: `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`,
+                        Authorization: apiKey,
                     },
                 }
             );
@@ -34,9 +35,9 @@ export const fetchRepos = createAsyncThunk(
 
 // Creating the repository slice
 const repoSlice = createSlice({
-    name: "repos", // Name of the slice
-    initialState, // Initial state defined above
-    reducers: {}, // Reducers for synchronous actions (none in this case)
+    name: "repos",
+    initialState,
+    reducers: {},
     extraReducers: (builder) => {
         // Handling different states of the fetchRepos async thunk
         builder

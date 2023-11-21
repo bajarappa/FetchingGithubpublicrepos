@@ -12,10 +12,14 @@ const RepoList = () => {
     const [query, setQuery] = useState("");
     const [sortOption, setSortOption] = useState("stars");
     const [initialLoad, setInitialLoad] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const handleSearch = (searchQuery) => {
         setQuery(searchQuery);
-        dispatch(fetchRepos({ query: searchQuery, sort: sortOption }));
+        setLoading(true);
+        dispatch(fetchRepos({ query: searchQuery, sort: sortOption }))
+            .unwrap()
+            .finally(() => setLoading(false));
         setInitialLoad(false);
     };
 
@@ -27,7 +31,7 @@ const RepoList = () => {
                 case "watchers":
                     return b.watchers_count - a.watchers_count;
                 case "score":
-                    return b.score - a.score; // Note: "score" is not a standard GitHub API sorting option
+                    return b.score - a.score;
                 case "name":
                     return a.name.localeCompare(b.name);
                 case "created_at":
@@ -58,8 +62,10 @@ const RepoList = () => {
                     isSearchActive={!!query}
                 />
 
-                {sortedRepos.length > 0 ? (
-                    <ul className=" grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 sm:p-0 mb-4">
+                {loading ? (
+                    <p>Loading...</p>
+                ) : sortedRepos.length > 0 ? (
+                    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 sm:p-0 mb-4">
                         {sortedRepos.map((repo) => (
                             <RepoCard key={repo.id} repo={repo} />
                         ))}
