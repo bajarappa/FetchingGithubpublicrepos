@@ -28,3 +28,6 @@ This ReactJS project allows users to search for public GitHub repositories using
     ```bash
     git clone https://github.com/your-username/github-repo-search-react.git
     ```
+
+2. Video Recording of the Project (walkthrough for showcasing the functionality of application)
+   Link to video https://youtu.be/cf4GYQBl1dE

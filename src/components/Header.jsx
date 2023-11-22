@@ -31,12 +31,17 @@ export default function Header({
 
                         {/* SortDropdown section, displayed only when search is active */}
                         <div className="lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                            {isSearchActive && (
+                            {/* {isSearchActive && (
                                 <SortDropdown
                                     value={sortOption}
                                     onSortChange={onSortChange}
                                 />
-                            )}
+                            )} */}
+
+                            <SortDropdown
+                                value={sortOption}
+                                onSortChange={onSortChange}
+                            />
                         </div>
                     </div>
                 </div>

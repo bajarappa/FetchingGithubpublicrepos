@@ -50,10 +50,13 @@ export default function RepoList() {
 
     // useEffect to fetch repos on initial load
     useEffect(() => {
-        if (initialLoad) {
-            dispatch(fetchRepos("Javascript"));
+        if (!query) {
+            setLoading(true);
+            dispatch(fetchRepos({ query: "javascript", sort: sortOption }))
+                .unwrap()
+                .finally(() => setLoading(false));
         }
-    }, [initialLoad]);
+    }, [dispatch, fetchRepos, sortOption]);
 
     // Sort repos based on the selected option or display unsorted repos if there's a search query
     const sortedRepos = query ? sortRepos(repos, sortOption) : repos;
@@ -82,7 +85,7 @@ export default function RepoList() {
                         ))}
                     </ul>
                 ) : (
-                    <p>No matching repos found.</p>
+                    <p>Search for your Repositary to display</p>
                 )}
             </div>
         </>
